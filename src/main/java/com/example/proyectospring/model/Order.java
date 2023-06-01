@@ -1,6 +1,8 @@
 package com.example.proyectospring.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 
@@ -11,8 +13,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId")
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "productId")
+    //@JoinColumn(name = "productId", referencedColumnName = "productId")
+    //Not a good practice, it's ok to use in 1:1 relations
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
     private Integer quantity;
     private String category;
